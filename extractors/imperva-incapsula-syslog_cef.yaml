@@ -1,0 +1,163 @@
+schema-version: 1.0
+#extractor-version: 1
+extractor-id: 786
+integration: Syslog(CEF)
+vendor-name: Imperva
+product-name: Incapsula WAF
+source-name: INCAPSULA-WAF
+source-type: WAF
+source-description: Extractor for Incapsula WAF Events
+kv-regex: '%KEY%=([^=]+|)(?=\\\s+\\\S+=|$)'
+provides-streams:
+- THREAT
+master-filters:
+- 'CEF\:\s?\d+\|Incapsula\|\w+'
+event-details:  
+- first-match: '\|Incapsula\|\w+\|[\d\.\-]+\|'
+  decoder: custom
+  decoder-regex: '([^\s\|]+)=([^=]+|)(?=\s+\S+=|$)' 
+  event-key-format: '{Header-5}'
+  decoder-header: CEF
+  event-key-mapping:
+    'SQL Injection':        
+      annotate:
+        Stream: THREAT
+        Action: THREAT_DETECTED
+        Status: PASSED 
+        Vector: WEB
+      translate:
+        src: SrcIP
+        DstIP: DstIP
+        cs9: Threat
+        User: User
+    'ACL':        
+      annotate:
+        Stream: THREAT
+        Action: THREAT_DETECTED
+        Status: PASSED 
+        Vector: WEB
+      translate:
+        src: SrcIP
+        DstIP: DstIP
+        cs9: Threat
+        User: User 
+    'Cross Site Scripting':        
+      annotate:
+        Stream: THREAT
+        Action: THREAT_DETECTED
+        Status: PASSED 
+        Vector: WEB
+      translate:
+        src: SrcIP
+        DstIP: DstIP
+        cs9: Threat
+        User: User 
+    'Illegal Resource Access':        
+      annotate:
+        Stream: THREAT
+        Action: THREAT_DETECTED
+        Status: PASSED 
+        Vector: WEB
+      translate:
+        src: SrcIP
+        DstIP: DstIP
+        cs9: Threat
+        User: User 
+    'Bot Access Control':        
+      annotate:
+        Stream: THREAT
+        Action: THREAT_DETECTED
+        Status: PASSED 
+        Vector: WEB
+      translate:
+        src: SrcIP
+        DstIP: DstIP
+        cs9: Threat
+        User: User 
+    'DDoS':        
+      annotate:
+        Stream: THREAT
+        Action: THREAT_DETECTED
+        Status: PASSED 
+        Vector: WEB
+      translate:
+        src: SrcIP
+        DstIP: DstIP
+        cs9: Threat
+        User: User
+    'Backdoor Protect':        
+      annotate:
+        Stream: THREAT
+        Action: THREAT_DETECTED
+        Status: PASSED 
+        Vector: WEB
+      translate:
+        src: SrcIP
+        DstIP: DstIP
+        cs9: Threat
+        User: User 
+    'Remote File Inclusion':        
+      annotate:
+        Stream: THREAT
+        Action: THREAT_DETECTED
+        Status: PASSED 
+        Vector: WEB
+      translate:
+        src: SrcIP
+        DstIP: DstIP
+        cs9: Threat
+        User: User
+    'Manual rule':        
+      annotate:
+        Stream: THREAT
+        Action: THREAT_DETECTED
+        Status: PASSED 
+        Vector: WEB
+      translate:
+        src: SrcIP
+        DstIP: DstIP
+        cs9: Threat
+        User: User
+    'API Specification Violation':        
+      annotate:
+        Stream: THREAT
+        Action: THREAT_DETECTED
+        Status: PASSED 
+        Vector: WEB
+      translate:
+        src: SrcIP
+        DstIP: DstIP
+        cs9: Threat
+        User: User
+    'Account Takeover Protection':        
+      annotate:
+        Stream: THREAT
+        Action: THREAT_DETECTED
+        Status: PASSED 
+        Vector: WEB
+      translate:
+        src: SrcIP
+        DstIP: DstIP
+        cs9: Threat
+        User: User
+    'Bad Bot':        
+      annotate:
+        Stream: THREAT
+        Action: THREAT_DETECTED
+        Status: PASSED 
+        Vector: WEB
+      translate:
+        src: SrcIP
+        DstIP: DstIP
+        cs9: Threat
+        User: User                                       
+  
+  fallback:
+    annotate:
+      EventName: Generic Incapsula WAF Event
+      Stream: OTHER
+
+  globals:
+    translate:
+      start: SystemTstamp
+      sourceServiceName: System
