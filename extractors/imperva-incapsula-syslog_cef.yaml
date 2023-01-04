@@ -154,7 +154,7 @@ event-details:
   
   fallback:
     annotate:
-      EventName: Generic Incapsula WAF Event
+      EventName: Generic Incapsula WAF event
       Stream: OTHER
 
   globals:
